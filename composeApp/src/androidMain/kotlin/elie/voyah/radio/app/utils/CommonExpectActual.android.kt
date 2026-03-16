@@ -1,7 +1,12 @@
-﻿package elie.voyah.radio.app.utils
+package elie.voyah.radio.app.utils
 
 import android.app.Activity
 import android.content.Intent
+
+actual val appVersionName: String
+    get() = runCatching {
+        activityProvider.invoke().packageManager.getPackageInfo(activityProvider.invoke().packageName, 0).versionName ?: "?"
+    }.getOrElse { "?" }
 
 actual fun shareLink(url: String) {
     val sendIntent = Intent(Intent.ACTION_SEND).apply {

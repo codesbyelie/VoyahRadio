@@ -5,13 +5,14 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.hoverable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsHoveredAsState
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -57,27 +58,27 @@ fun RadioGridItem(
         tonalElevation = thin,
         shape = Shapes.small,
     ) {
-        Column(
+        BoxWithConstraints(
             modifier = Modifier
                 .padding(small)
-                .fillMaxWidth(),
+                .fillMaxWidth()
         ) {
+            val maxImageSize = minOf(maxWidth, 180.dp)
+            Column(modifier = Modifier.fillMaxWidth()) {
             radio.imgUrl?.let { imageUrl ->
                 CustomAsyncImage(
                     imageUrl = imageUrl,
                     contentDescription = radio.name,
                     errorImage = painterResource(Res.drawable.broken_image_radio),
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .heightIn(max = 180.dp)
-                        .aspectRatio(1f)
+                        .size(maxImageSize)
                         .clip(Shapes.small)
                 )
             }
 
             Spacer(modifier = Modifier.height(small))
 
-            Column(modifier = Modifier.fillMaxWidth().heightIn(min = 44.dp)) {
+            Column(modifier = Modifier.fillMaxWidth().heightIn(min = 52.dp)) {
             Text(
                 text = radio.name.trimStart(),
                 style = MaterialTheme.typography.titleSmall.copy(
@@ -112,6 +113,7 @@ fun RadioGridItem(
                         overflow = TextOverflow.Ellipsis,
                     )
                 }
+            }
             }
             }
         }

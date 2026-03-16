@@ -14,34 +14,39 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import elie.voyah.radio.domain.Radio
-import elie.voyah.radio.app.theme.LocalFeedScale
-import elie.voyah.radio.app.theme.horizontalGridMaxHeight
-import elie.voyah.radio.app.theme.horizontalGridMaxWidth
+import elie.voyah.radio.app.theme.small
+import elie.voyah.radio.app.theme.thin
 import elie.voyah.radio.app.theme.zero
 
 @Composable
 fun RadioHorizontalGridItem(
     radios: List<Radio>,
     onRadioClick: (Radio) -> Unit,
+    stationCellWidth: Dp,
+    feedScale: Float,
     modifier: Modifier = Modifier
 ) {
-    val feedScale = LocalFeedScale.current
     val gridState = rememberLazyGridState()
     val coroutineScope = rememberCoroutineScope()
     val uniqueRadios = radios.distinctBy { it.id to it.url }
     val radiosSize by mutableStateOf(uniqueRadios.size)
-    val scaledWidth = (horizontalGridMaxWidth.value * feedScale).dp
-    val scaledMaxHeight = (horizontalGridMaxHeight.value * feedScale).dp
-    val scaledMaxHeightHalf = (horizontalGridMaxHeight.value * 0.5f * feedScale).dp
+    val imageMaxHeight = 180.dp
+    // Scale text block height with feedScale so at max slider saved cards don't clip (title + country/language)
+    val textBlockMinHeight = (52 * feedScale).coerceIn(52f, 72f).dp
+    // Include card internal padding (Surface thin + Box small, top+bottom) so text block actually gets textBlockMinHeight
+    val cardVerticalPadding = (thin.value * 2 + small.value * 2)
+    val oneCardHeight = (minOf(stationCellWidth.value, imageMaxHeight.value) + small.value + textBlockMinHeight.value + cardVerticalPadding).dp
+    val rowHeight = if (radios.size > 3) (oneCardHeight.value * 2).dp else oneCardHeight
 
     LazyHorizontalGrid(
         state = gridState,
         rows = GridCells.Fixed(if (radios.size > 3) 2 else 1),
         modifier = modifier
-            .heightIn(max = if (radios.size > 3) scaledMaxHeight else scaledMaxHeightHalf)
+            .heightIn(max = rowHeight)
             .pointerInput(Unit) {
                 detectHorizontalDragGestures { change, dragAmount ->
                     change.consume()
@@ -59,7 +64,7 @@ fun RadioHorizontalGridItem(
                 onClick = {
                     onRadioClick(uniqueRadios[it])
                 },
-                modifier = Modifier.width(scaledWidth)
+                modifier = Modifier.width(stationCellWidth)
             )
         }
     }

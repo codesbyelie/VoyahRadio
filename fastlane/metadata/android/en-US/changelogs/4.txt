@@ -1,0 +1,1 @@
+• Fixed a bug where the station grid size slider was not doing proper sizing for the Saved Radios row. Saved station cards now show the full text (station name and language/country) without being cut off, including when the slider is at max size.

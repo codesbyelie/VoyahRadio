@@ -74,7 +74,7 @@ import voyahradio.composeapp.generated.resources.license_type
 import voyahradio.composeapp.generated.resources.maintainer
 import voyahradio.composeapp.generated.resources.recently_updated
 import voyahradio.composeapp.generated.resources.version_label
-import voyahradio.composeapp.generated.resources.version_number
+import elie.voyah.radio.app.utils.appVersionName
 import voyahradio.composeapp.generated.resources.webpage_label
 import voyahradio.composeapp.generated.resources.webpage_url
 
@@ -160,7 +160,9 @@ fun HomeScreen(
                             viewModel.selectedRadio(it)
                             scope.launch { bottomSheetState.bottomSheetState.expand() }
                             viewModel.play(it.url)
-                        }
+                        },
+                        stationCellWidth = minCellWidthDp,
+                        feedScale = feedScale
                     )
                 }
             }
@@ -324,7 +326,7 @@ private fun ShowAboutDialog(
                 )
                 Text(
                     style = MaterialTheme.typography.bodyMedium,
-                    text = stringResource(Res.string.version_number)
+                    text = appVersionName
                 )
             }
         }
