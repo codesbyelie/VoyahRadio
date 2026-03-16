@@ -34,12 +34,14 @@ fun RadioHorizontalGridItem(
     val uniqueRadios = radios.distinctBy { it.id to it.url }
     val radiosSize by mutableStateOf(uniqueRadios.size)
     val scaledWidth = (horizontalGridMaxWidth.value * feedScale).dp
+    val scaledMaxHeight = (horizontalGridMaxHeight.value * feedScale).dp
+    val scaledMaxHeightHalf = (horizontalGridMaxHeight.value * 0.5f * feedScale).dp
 
     LazyHorizontalGrid(
         state = gridState,
         rows = GridCells.Fixed(if (radios.size > 3) 2 else 1),
         modifier = modifier
-            .heightIn(max = if (radios.size > 3) horizontalGridMaxHeight else horizontalGridMaxHeight / 2 )
+            .heightIn(max = if (radios.size > 3) scaledMaxHeight else scaledMaxHeightHalf)
             .pointerInput(Unit) {
                 detectHorizontalDragGestures { change, dragAmount ->
                     change.consume()
