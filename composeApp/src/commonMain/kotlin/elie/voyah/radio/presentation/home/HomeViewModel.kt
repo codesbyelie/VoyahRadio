@@ -1,4 +1,4 @@
-﻿package elie.voyah.radio.presentation.home
+package elie.voyah.radio.presentation.home
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -12,8 +12,10 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import elie.voyah.radio.app.player.PlayerRepository
+import elie.voyah.radio.app.utils.AppPreferences
 import elie.voyah.radio.app.utils.MAX_RADIO_TO_FETCH
 import elie.voyah.radio.app.utils.SEARCH_TRIGGER_CHAR
 import elie.voyah.radio.app.utils.UiText
@@ -25,7 +27,8 @@ import elie.voyah.radio.domain.RadioRepository
 
 class HomeViewModel(
     private val radioRepository: RadioRepository,
-    val playerRepository: PlayerRepository
+    val playerRepository: PlayerRepository,
+    private val appPreferences: AppPreferences
 ) : ViewModel() {
 
     private val cachedRadios = emptyList<Radio>()
@@ -59,6 +62,10 @@ class HomeViewModel(
     var searchResult by mutableStateOf<List<Radio>>(emptyList())
         private set
 
+    /** 0f = more stations per row, 1f = fewer (larger cells). Used for grid column size. */
+    var stationCellSizeFraction by mutableStateOf(appPreferences.getStationCellSizeFractionSync())
+        private set
+
     var selectedRadio by mutableStateOf<Radio?>(null)
         private set
 
@@ -79,6 +86,11 @@ class HomeViewModel(
         observeSavedRadio()
         if (cachedRadios.isEmpty()) {
             observeSearchQuery()
+        }
+        viewModelScope.launch {
+            appPreferences.getStationCellSizeFraction().collect { fraction ->
+                stationCellSizeFraction = fraction
+            }
         }
     }
 

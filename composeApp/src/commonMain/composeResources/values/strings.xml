@@ -16,6 +16,7 @@
     <string name="delete">Delete</string>
     <string name="clear_data_title">Confirm Deletion</string>
     <string name="clear_data_warning">Are you sure you want to delete all saved data? This action cannot be undone, and you will permanently lose all saved information.</string>
+    <string name="station_grid_size">Station grid size</string>
 
     <!--Radio-->
     <string name="search_radios">Search Radios</string>
@@ -74,7 +75,7 @@
     <!--About-->
     <string name="about">About</string>
     <string name="developer">Developed by Elie Meouchi</string>
-    <string name="maintainer"></string>
+    <string name="maintainer">for Voyah Lebanon</string>
     <string name="last_updated_label">Last Updated</string>
     <string name="last_updated_date">March 2026</string>
     <string name="contact_label">Contact</string>
@@ -87,6 +88,6 @@
     <string name="license_type">GPL-3.0 license</string>
     <string name="version_label">Version</string>
     <string name="version_number">1.0.0</string>
-    <string name="about_app">VoyahRadio is an internet radio player. Specifically designed for Lebanon.</string>
+    <string name="about_app">VoyahRadio is an internet radio player.</string>
 
 </resources>

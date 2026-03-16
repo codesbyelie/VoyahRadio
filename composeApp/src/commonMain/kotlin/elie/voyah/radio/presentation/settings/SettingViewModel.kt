@@ -27,9 +27,20 @@ class SettingViewModel(
     var isClearDataDialog by mutableStateOf(false)
         private set
 
+    /** 0f = more stations per row (smaller cells), 1f = fewer per row (larger cells). Affects grid + icons + text. */
+    var stationCellSizeFraction by mutableStateOf(appPreferences.getStationCellSizeFractionSync())
+        private set
+
     init {
         viewModelScope.launch {
             theme = appPreferences.getTheme()
+        }
+    }
+
+    fun onStationCellSizeChange(fraction: Float) {
+        stationCellSizeFraction = fraction.coerceIn(0f, 1f)
+        viewModelScope.launch {
+            appPreferences.setStationCellSizeFraction(stationCellSizeFraction)
         }
     }
 

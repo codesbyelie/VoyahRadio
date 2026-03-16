@@ -1,4 +1,4 @@
-﻿package elie.voyah.radio.presentation.home.components
+package elie.voyah.radio.presentation.home.components
 
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.gestures.scrollBy
@@ -14,8 +14,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import elie.voyah.radio.domain.Radio
+import elie.voyah.radio.app.theme.LocalFeedScale
 import elie.voyah.radio.app.theme.horizontalGridMaxHeight
 import elie.voyah.radio.app.theme.horizontalGridMaxWidth
 import elie.voyah.radio.app.theme.zero
@@ -26,10 +28,12 @@ fun RadioHorizontalGridItem(
     onRadioClick: (Radio) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val feedScale = LocalFeedScale.current
     val gridState = rememberLazyGridState()
     val coroutineScope = rememberCoroutineScope()
     val uniqueRadios = radios.distinctBy { it.id to it.url }
     val radiosSize by mutableStateOf(uniqueRadios.size)
+    val scaledWidth = (horizontalGridMaxWidth.value * feedScale).dp
 
     LazyHorizontalGrid(
         state = gridState,
@@ -53,7 +57,7 @@ fun RadioHorizontalGridItem(
                 onClick = {
                     onRadioClick(uniqueRadios[it])
                 },
-                modifier = Modifier.width(horizontalGridMaxWidth)
+                modifier = Modifier.width(scaledWidth)
             )
         }
     }

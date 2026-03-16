@@ -1,9 +1,11 @@
-﻿package elie.voyah.radio.app.theme
+package elie.voyah.radio.app.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.sp
 import voyahradio.composeapp.generated.resources.Poppins_100
 import voyahradio.composeapp.generated.resources.Poppins_200
 import voyahradio.composeapp.generated.resources.Poppins_300
@@ -29,24 +31,29 @@ fun PoppinsFontFamily() = FontFamily(
     Font(Res.font.Poppins_900, weight = FontWeight.Black),
 )
 
+// Scale factor for headunit/car readability (matches ~50% larger icons)
+private const val TYPOGRAPHY_SCALE = 1.5f
+
 @Composable
 fun AppTypography() = Typography().run {
     val fontFamily = PoppinsFontFamily()
+    fun scaleSp(style: TextStyle) =
+        (style.fontSize.value * TYPOGRAPHY_SCALE).sp
     copy(
-        displayLarge = displayLarge.copy(fontFamily = fontFamily),
-        displayMedium = displayMedium.copy(fontFamily = fontFamily),
-        displaySmall = displaySmall.copy(fontFamily = fontFamily),
-        headlineLarge = headlineLarge.copy(fontFamily = fontFamily),
-        headlineMedium = headlineMedium.copy(fontFamily = fontFamily),
-        headlineSmall = headlineSmall.copy(fontFamily = fontFamily),
-        titleLarge = titleLarge.copy(fontFamily = fontFamily),
-        titleMedium = titleMedium.copy(fontFamily = fontFamily),
-        titleSmall = titleSmall.copy(fontFamily = fontFamily),
-        bodyLarge = bodyLarge.copy(fontFamily = fontFamily),
-        bodyMedium = bodyMedium.copy(fontFamily = fontFamily),
-        bodySmall = bodySmall.copy(fontFamily = fontFamily),
-        labelLarge = labelLarge.copy(fontFamily = fontFamily),
-        labelMedium = labelMedium.copy(fontFamily = fontFamily),
-        labelSmall = labelSmall.copy(fontFamily = fontFamily)
+        displayLarge = displayLarge.copy(fontFamily = fontFamily, fontSize = scaleSp(displayLarge)),
+        displayMedium = displayMedium.copy(fontFamily = fontFamily, fontSize = scaleSp(displayMedium)),
+        displaySmall = displaySmall.copy(fontFamily = fontFamily, fontSize = scaleSp(displaySmall)),
+        headlineLarge = headlineLarge.copy(fontFamily = fontFamily, fontSize = scaleSp(headlineLarge)),
+        headlineMedium = headlineMedium.copy(fontFamily = fontFamily, fontSize = scaleSp(headlineMedium)),
+        headlineSmall = headlineSmall.copy(fontFamily = fontFamily, fontSize = scaleSp(headlineSmall)),
+        titleLarge = titleLarge.copy(fontFamily = fontFamily, fontSize = scaleSp(titleLarge)),
+        titleMedium = titleMedium.copy(fontFamily = fontFamily, fontSize = scaleSp(titleMedium)),
+        titleSmall = titleSmall.copy(fontFamily = fontFamily, fontSize = scaleSp(titleSmall)),
+        bodyLarge = bodyLarge.copy(fontFamily = fontFamily, fontSize = scaleSp(bodyLarge)),
+        bodyMedium = bodyMedium.copy(fontFamily = fontFamily, fontSize = scaleSp(bodyMedium)),
+        bodySmall = bodySmall.copy(fontFamily = fontFamily, fontSize = scaleSp(bodySmall)),
+        labelLarge = labelLarge.copy(fontFamily = fontFamily, fontSize = scaleSp(labelLarge)),
+        labelMedium = labelMedium.copy(fontFamily = fontFamily, fontSize = scaleSp(labelMedium)),
+        labelSmall = labelSmall.copy(fontFamily = fontFamily, fontSize = scaleSp(labelSmall))
     )
 }

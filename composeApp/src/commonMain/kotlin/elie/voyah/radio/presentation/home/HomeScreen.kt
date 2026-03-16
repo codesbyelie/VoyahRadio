@@ -26,6 +26,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
@@ -41,8 +42,8 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import elie.voyah.radio.app.theme.Shapes
-import elie.voyah.radio.app.theme.compactFeedWidth
 import elie.voyah.radio.app.theme.extraSmall
+import elie.voyah.radio.app.theme.LocalFeedScale
 import elie.voyah.radio.app.theme.medium
 import elie.voyah.radio.app.theme.small
 import elie.voyah.radio.domain.Radio
@@ -131,9 +132,13 @@ fun HomeScreen(
             )
         }
     ) { contentPadding ->
+        val fraction = viewModel.stationCellSizeFraction
+        val minCellWidthDp = (120 + fraction * 80).toInt().coerceIn(100, 220).dp
+        val feedScale = (0.85f + fraction * 0.35f).coerceIn(0.85f, 1.2f)
+        CompositionLocalProvider(LocalFeedScale provides feedScale) {
         Feed(
             modifier = Modifier.fillMaxSize(),
-            columns = GridCells.Adaptive(compactFeedWidth),
+            columns = GridCells.Adaptive(minCellWidthDp),
             state = gridState,
             contentPadding = contentPadding,
             verticalArrangement = Arrangement.spacedBy(0.dp),
@@ -202,6 +207,7 @@ fun HomeScreen(
                     }
                 }
             }
+        }
         }
     }
 

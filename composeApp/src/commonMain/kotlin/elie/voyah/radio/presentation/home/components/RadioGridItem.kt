@@ -1,4 +1,4 @@
-﻿package elie.voyah.radio.presentation.home.components
+package elie.voyah.radio.presentation.home.components
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.clickable
@@ -23,8 +23,10 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.sp
 import org.jetbrains.compose.resources.painterResource
 import elie.voyah.radio.domain.Radio
+import elie.voyah.radio.app.theme.LocalFeedScale
 import elie.voyah.radio.app.theme.Shapes
 import elie.voyah.radio.app.theme.small
 import elie.voyah.radio.app.theme.thin
@@ -37,6 +39,7 @@ fun RadioGridItem(
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val feedScale = LocalFeedScale.current
     val interactionSource = remember { MutableInteractionSource() }
     val isHovered by interactionSource.collectIsHoveredAsState()
     val scale by animateFloatAsState(targetValue = if (isHovered) 1.05f else 1f)
@@ -75,7 +78,8 @@ fun RadioGridItem(
                 text = radio.name.trimStart(),
                 style = MaterialTheme.typography.titleSmall.copy(
                     fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onSurface
+                    color = MaterialTheme.colorScheme.onSurface,
+                    fontSize = (MaterialTheme.typography.titleSmall.fontSize.value * feedScale).sp
                 ),
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
@@ -86,7 +90,8 @@ fun RadioGridItem(
                 Text(
                     text = language.replaceFirstChar { it.uppercase() },
                     style = MaterialTheme.typography.bodySmall.copy(
-                        color = MaterialTheme.colorScheme.onSurface
+                        color = MaterialTheme.colorScheme.onSurface,
+                        fontSize = (MaterialTheme.typography.bodySmall.fontSize.value * feedScale).sp
                     ),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
@@ -96,7 +101,8 @@ fun RadioGridItem(
                     Text(
                         text = country,
                         style = MaterialTheme.typography.bodySmall.copy(
-                            color = MaterialTheme.colorScheme.onSurface
+                            color = MaterialTheme.colorScheme.onSurface,
+                            fontSize = (MaterialTheme.typography.bodySmall.fontSize.value * feedScale).sp
                         ),
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,

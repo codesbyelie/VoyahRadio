@@ -1,4 +1,4 @@
-﻿package elie.voyah.radio.app.theme
+package elie.voyah.radio.app.theme
 
 import androidx.compose.ui.unit.dp
 
@@ -13,6 +13,9 @@ val mediumNavigationBarWidth = 100.dp
 val expandedFeedWidth = 150.dp
 val mediumFeedWidth = 140.dp
 val compactFeedWidth = 120.dp
+
+/** Minimum width for a station grid cell so label text stays readable. Grid uses Adaptive(this) for dynamic column count. */
+val minStationCellWidth = 140.dp
 
 val expandedScreenPadding = 50.dp
 val mediumScreenPadding = 20.dp

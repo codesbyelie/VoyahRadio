@@ -1,4 +1,4 @@
-﻿package elie.voyah.radio.presentation.home.components
+package elie.voyah.radio.presentation.home.components
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.clickable
@@ -32,11 +32,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import elie.voyah.radio.domain.Radio
 import elie.voyah.radio.app.theme.Shapes
 import elie.voyah.radio.app.theme.extraLarge
+import elie.voyah.radio.app.theme.LocalFeedScale
 import elie.voyah.radio.app.theme.extraSmall
 import elie.voyah.radio.app.theme.imageSize
 import elie.voyah.radio.app.theme.small
@@ -52,6 +55,7 @@ fun RadioListItem(
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val feedScale = LocalFeedScale.current
     val interactionSource = remember { MutableInteractionSource() }
     val isHovered by interactionSource.collectIsHoveredAsState()
     val scale by animateFloatAsState(targetValue = if (isHovered) 1.04f else 1f)
@@ -76,7 +80,7 @@ fun RadioListItem(
             horizontalArrangement = Arrangement.spacedBy(small)
         ) {
             Box(
-                modifier = Modifier.size(imageSize),
+                modifier = Modifier.size((imageSize.value * feedScale).dp),
                 contentAlignment = Alignment.Center
             ) {
                 radio.imgUrl?.let { imageUrl ->
@@ -102,14 +106,18 @@ fun RadioListItem(
             ) {
                 Text(
                     text = radio.name,
-                    style = MaterialTheme.typography.titleMedium,
+                    style = MaterialTheme.typography.titleMedium.copy(
+                        fontSize = (MaterialTheme.typography.titleMedium.fontSize.value * feedScale).sp
+                    ),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
                 Text(
                     text = "Country: " + (radio.country?.takeIf { it.isNotBlank() }
                         ?: stringResource(Res.string.unknown)),
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = MaterialTheme.typography.bodyMedium.copy(
+                        fontSize = (MaterialTheme.typography.bodyMedium.fontSize.value * feedScale).sp
+                    ),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
@@ -117,21 +125,25 @@ fun RadioListItem(
                     text = "Language: " + (radio.language?.firstOrNull { it.isNotBlank() }
                         ?.replaceFirstChar { it.uppercase() }
                         ?: stringResource(Res.string.unknown)),
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = MaterialTheme.typography.bodyMedium.copy(
+                        fontSize = (MaterialTheme.typography.bodyMedium.fontSize.value * feedScale).sp
+                    ),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
                 Text(
                     text = "Bitrate: " + ((radio.bitrate?.toString()
                         .takeIf { it?.isNotBlank() == true } ?: "0") + " kbps"),
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = MaterialTheme.typography.bodyMedium.copy(
+                        fontSize = (MaterialTheme.typography.bodyMedium.fontSize.value * feedScale).sp
+                    ),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
             }
 
             Icon(
-                modifier = Modifier.size(extraLarge),
+                modifier = Modifier.size((extraLarge.value * feedScale).dp),
                 imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
                 contentDescription = stringResource(Res.string.right_arrow)
             )

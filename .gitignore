@@ -26,6 +26,9 @@ render.experimental.xml
 *.jks
 *.keystore
 
+# Release signing (keystore + credentials – never commit)
+release-signing/
+
 # Google Services (e.g. APIs or Firebase)
 google-services.json
 
