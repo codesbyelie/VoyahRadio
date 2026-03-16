@@ -7,6 +7,7 @@
 - **Touch-friendly slider** — The grid size slider uses a larger thumb (36dp) for easier use on touch screens and in-car.
 - **Dynamic columns** — Grid uses adaptive columns with a minimum cell width so the number of stations per row adjusts to your screen and your chosen size (e.g. 7 at normal, 6 or 5 when you increase size).
 - **Headunit tweaks** — Typography scaled 1.5× for readability; previous layout and icon sizing improvements for Voyah headunit.
+- **Layout and text fit** — Save/Saved button text no longer wraps (stays on one line); station card text area has minimum height so it’s never clipped when the grid size slider is at max; time display in player no longer wraps; image height in cards is capped so text always has room.
 
 ### Download
 

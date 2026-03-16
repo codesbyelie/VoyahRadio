@@ -403,8 +403,10 @@ actual class PlayerController(context: Context) : PlayerRepository {
                     val seconds = totalSeconds % 60
                     Text(
                         textAlign = TextAlign.End,
-                        modifier = Modifier.width(65.dp),
-                        text = String.format("%d:%02d:%02d", hours, minutes, seconds)
+                        modifier = Modifier.width(80.dp),
+                        text = String.format("%d:%02d:%02d", hours, minutes, seconds),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
                     )
                 }
 

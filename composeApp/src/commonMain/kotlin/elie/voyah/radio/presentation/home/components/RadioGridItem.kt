@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -23,6 +24,7 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.jetbrains.compose.resources.painterResource
 import elie.voyah.radio.domain.Radio
@@ -67,6 +69,7 @@ fun RadioGridItem(
                     errorImage = painterResource(Res.drawable.broken_image_radio),
                     modifier = Modifier
                         .fillMaxWidth()
+                        .heightIn(max = 180.dp)
                         .aspectRatio(1f)
                         .clip(Shapes.small)
                 )
@@ -74,6 +77,7 @@ fun RadioGridItem(
 
             Spacer(modifier = Modifier.height(small))
 
+            Column(modifier = Modifier.fillMaxWidth().heightIn(min = 44.dp)) {
             Text(
                 text = radio.name.trimStart(),
                 style = MaterialTheme.typography.titleSmall.copy(
@@ -108,6 +112,7 @@ fun RadioGridItem(
                         overflow = TextOverflow.Ellipsis,
                     )
                 }
+            }
             }
         }
     }
